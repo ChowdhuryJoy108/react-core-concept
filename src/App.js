@@ -18,9 +18,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>I m  a react person</p>
+        <Shiva name="Shiva" say="Om Namay Shiva" />
 
         <Counter />
-        <Users />
+        <Albums />
 
       
         <ul>
@@ -55,39 +56,54 @@ function Counter(){
 
   const [count, setCount] = useState(0);
 
-  // const handleIncrease = () => {
+  // const handleIncrease = ()=>{
   //   const newCount = count + 1;
-  //   setCount(newCount)
-  // };
+  //   setCount(newCount);
+  // }
 
-  return (
+  return(
     <div>
-      <h1>Count: {count} </h1>
-      <button onMouseMove={() => setCount(count - 1)}>Decrease</button>
-      <button onClick={()=> setCount(count + 1)}>Increase</button>
+      <h1>Count : {count} </h1>
+      <button onClick={()=>setCount(count + 1)}>increase</button>
+      <button onClick={()=>setCount(count - 1)}>decrease</button>
     </div>
   )
 }
 
-function Users(){
-  const [users, setUsers] = useState([]);
+function Albums(){
+
+  const liStyle ={
+    backgroundColor:'lightgray',
+    color:'black'
+  }
+  const[albums , setAlbum] = useState([]);
 
   useEffect(()=>{
-
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch("https://jsonplaceholder.typicode.com/albums")
     .then(res => res.json())
-    .then(data => setUsers(data));
-    
-  }, [])
+    .then(data => setAlbum(data));
+  })
+  return(
+    <div>
+        <h3 style={liStyle}>Album :{albums.length}</h3>
 
+<ul>
+  {
+    albums.map(album => <li style={{border:'1px solid red',listStyle:'none'}}>{album.title}</li>)
+  }
+</ul>
+    </div>
+  
+  )
+}
+
+function Shiva(props){
   return (
     <div>
-      <h3>Dynamic Users: {users.length} </h3>
-      <ul>
-        {
-          users.map(user => <li>{user.email}</li>)
-        }
-      </ul>
+      <h1>lord {props.name} </h1>
+
+      <p> {props.say} </p>
+
     </div>
   )
 }
